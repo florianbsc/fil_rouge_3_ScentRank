@@ -1,39 +1,39 @@
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+/mongodb_data
+init-mongo/02-seed.js
 
-# dependencies
+# --- Node.js ---
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json # (optionnel : si vous ne voulez pas verrouiller les deps dans git)
 
-# Expo
-.expo/
+# --- Build NestJS ---
 dist/
-web-build/
-expo-env.d.ts
+.out/
+.next/
+.cache/
 
-# Native
-.kotlin/
-*.orig.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
+# --- Environnements ---
+.env
+.env.*.local
+.env.dev
+.env.prod
 
-# Metro
-.metro-health-check*
+# --- Logs ---
+logs
+*.log
+*.tmp
+.temp
+.tmp
 
-# debug
-npm-debug.*
-yarn-debug.*
-yarn-error.*
-
-# macOS
+# --- IDE / OS ---
+.vscode/
+.idea/
 .DS_Store
-*.pem
+Thumbs.db
 
-# local env files
-.env*.local
-
-# typescript
-*.tsbuildinfo
-
-app-example
+# --- Docker ---
+.dockerignore
+docker-data/
