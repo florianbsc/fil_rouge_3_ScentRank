@@ -1,0 +1,25 @@
+
+services:
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    container_name: nest_api_prod
+    ports:
+      - "${PORT}:3000"
+    env_file: ../.env.prod
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:6
+    container_name: mongo_prod
+    restart: unless-stopped
+    env_file: ../.env.prod
+    ports:
+      - "${MONGO_PORT}:27017"
+    volumes:
+      - mongo_data_prod:/data/db
+
+volumes:
+  mongo_data_prod:
