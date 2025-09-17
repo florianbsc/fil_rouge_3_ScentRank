@@ -18,7 +18,7 @@
 `docker rm -f nom-conteneur`
 
 ### Supprimer tous les conteneurs
-`docker system prune --all`
+``
 
 ## Supprime les volumes
 `docker volume prune --all`
