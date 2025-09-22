@@ -30,7 +30,7 @@ services:
         # - ./init-mongo:/docker-entrypoint-initdb.d
                                       # (Optionnel) Dossier pour initialiser la DB avec des scripts
     healthcheck:                      # Vérifie que Mongo est bien prêt avant de lancer l’API
-      test: ["CMD-SHELL", "mongosh --eval 'db.adminCommand({ ping: 1 })' || exit 1"]
+      test: ["CMD-SHELL", "echo 'db.runCommand({ ping: 1 })' | mongosh localhost:27017/test --quiet || exit 1"]
       interval: 5s                    # Vérifie toutes les 5 secondes
       timeout: 3s                     # Timeout max 3s pour la commande
       retries: 20                     # Retente jusqu’à 20 fois avant de déclarer le conteneur KO
