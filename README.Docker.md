@@ -31,7 +31,7 @@
 
 # Debug
 
-Si api n’apparaît  pas → c’est que le profil `"dev" n’est pas activé.
+Si api n’apparaît pas → c’est que le profil `"dev" n’est pas activé.
 Teste alors avec :
 
 `docker compose -f docker-compose.dev.yml --profile dev up --build`
