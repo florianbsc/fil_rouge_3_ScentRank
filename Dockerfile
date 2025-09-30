@@ -8,13 +8,15 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Installation des dépendances avec cache layerisé
-RUN npm install
+RUN npm ci
 
 # Copie du reste du projet
 COPY . .
 
-# Installation du CLI NestJS uniquement pour le dev
-RUN npm install -g @nestjs/cli
+# Installation du CLI ExpressJS uniquement pour le dev
+RUN npm install -g nodemon
+# RUN npm install -g @nestjs/cli
+
 
 # Lancement en mode dev avec hot reload
 CMD ["npm", "run", "start:dev"]

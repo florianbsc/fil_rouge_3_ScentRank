@@ -14,7 +14,9 @@
 
 
 ### Arrêter et nettoyer :
-`docker compose -f docker-compose.dev.yml down -v`
+`docker compose -f docker-compose.dev.yml down -v` ou 
+
+`docker compose -f docker-compose.dev.yml --profile dev down -v`
 
 ### Liste les conteneurs :
 `docker ps -a`

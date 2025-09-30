@@ -2,7 +2,7 @@ services:
 
   api:
     build:
-      context: ./backend              # On construit l’image à partir du dossier backend
+      context: ./backend-express              # On construit l’image à partir du dossier backend
       target: dev                     # On utilise la target "dev" du Dockerfile (hot reload NestJS)
       dockerfile: ../Dockerfile       # On utilise le Dockerfile multi-stage situé à la racine
     # container_name: nest_api_dev    # (Optionnel) Si tu veux un nom fixe pour le conteneur
@@ -10,12 +10,15 @@ services:
       - "${PORT:-3000}:3000"          # Expose le port défini dans .env.dev (ou 3000 par défaut)
     env_file: .env.dev                # Charge les variables d’environnement depuis .env.dev
     volumes:
-      - ./backend:/usr/src/app        # Monte ton code local → synchro automatique avec le conteneur
+      - ./backend-express:/usr/src/app        # Monte ton code local → synchro automatique avec le conteneur
       - node_modules_dev:/usr/src/app/node_modules
                                       # Volume nommé pour node_modules (évite les conflits host/container)
     depends_on:
       mongo-dev:
         condition: service_healthy   # L’API démarre seulement si MongoDB est healthy
+        # networks:
+        #   - express-mongo
+        #   - react-express
     profiles: [ "dev" ]               # Active uniquement ce service si le profil "dev" est utilisé
 
   mongo-dev:
