@@ -4,6 +4,7 @@ dotenv.config({ path: ".env.dev" });
 import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
+import {perfumesRouter} from './routes/perfumes.route.js';
 
 const app = express();
 
@@ -15,10 +16,15 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Hello World depuis Express !");
 });
+
 app.get("/test", (req, res) => res.send("API Parfum en Express 🚀"));
-app.get("/parfum", (req, res) => {
+
+app.get("/perfumes", (req, res) => {
   res.json({ message: "Liste des parfums (à implémenter)" });
 });
+
+// Montes le router
+app.use("/read", perfumesRouter);
 
 // Connexion MongoDB
 mongoose.connect(process.env.MONGO_URI)

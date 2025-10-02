@@ -8,7 +8,8 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Installation des dépendances avec cache layerisé
-RUN npm ci
+# RUN npm ci
+RUN npm install
 
 # Copie du reste du projet
 COPY . .
