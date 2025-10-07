@@ -1,0 +1,15 @@
+meta {
+  name: PerfumesTendance
+  type: http
+  seq: 6
+}
+
+get {
+  url: http://localhost:3000/perfumes/trending/top
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
