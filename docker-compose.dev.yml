@@ -4,7 +4,7 @@ services:
       context: ./backend-express              # On construit l’image à partir du dossier backend
       target: dev                     # On utilise la target "dev" du Dockerfile (hot reload NestJS)
       dockerfile: ../Dockerfile       # On utilise le Dockerfile multi-stage situé à la racine
-    container_name: api_dev           # (Optionnel) Si tu veux un nom fixe pour le conteneur
+    # container_name: api_dev           # (Optionnel) Si tu veux un nom fixe pour le conteneur
     ports:
       - "${PORT:-3000}:3000"          # Expose le port défini dans .env.dev (ou 3000 par défaut)
     env_file: .env.dev                # Charge les variables d’environnement depuis .env.dev
@@ -22,7 +22,7 @@ services:
 
   mongo-dev:
     image: mongo:6.0                  # Utilise l’image officielle MongoDB version 6
-    container_name: mongo_dev         # (Optionnel) Nom fixe pour le conteneur MongoDB
+    # container_name: mongo_dev         # (Optionnel) Nom fixe pour le conteneur MongoDB
     restart: unless-stopped           # Relance auto du conteneur sauf si tu l’arrêtes manuellement
     env_file: .env.dev                # Variables d’env pour configurer Mongo (user, mdp, db…)
     ports:

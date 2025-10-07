@@ -38,7 +38,8 @@
 
 
 import { Request, Response } from "express";
-import { PerfumeModel, IPerfume } from "../models/perfumes.model";
+import { PerfumeModel} from "../models/perfumes.model";
+// import { PerfumeModel, IPerfume } from "../models/perfumes.model";
 
 // GET /perfumes
 export const getAllPerfumes = async (_req: Request, res: Response) => {
