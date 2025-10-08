@@ -21,7 +21,7 @@ services:
     profiles: [ "dev" ]               # Active uniquement ce service si le profil "dev" est utilisé
 
   mongo-dev:
-    image: mongo:6.0                  # Utilise l’image officielle MongoDB version 6
+    image: mongo:8.0                  # Utilise l’image officielle MongoDB version 6
     # container_name: mongo_dev         # (Optionnel) Nom fixe pour le conteneur MongoDB
     restart: unless-stopped           # Relance auto du conteneur sauf si tu l’arrêtes manuellement
     env_file: .env.dev                # Variables d’env pour configurer Mongo (user, mdp, db…)

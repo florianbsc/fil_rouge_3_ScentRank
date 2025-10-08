@@ -19,7 +19,7 @@ import app from "./app";
 import mongoose from "mongoose";
 
 const PORT = process.env.PORT || 3000;
-const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/perfumedb";
+const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/devdb";
 
 // Connexion MongoDB
 mongoose.connect(MONGO_URI)

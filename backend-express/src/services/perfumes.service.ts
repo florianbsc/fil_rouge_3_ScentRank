@@ -44,19 +44,34 @@ export const findById = async (id: string): Promise<IPerfume | null> => {
 };
 
 // 🔹 Ajouter une note à un parfum
-export const addRating = async (id: string, rating: number): Promise<IPerfume> => {
-  const perfume = await PerfumeModel.findById(id);
-  if (!perfume) {
-    throw new Error("Perfume not found");
-  }
+// export const addRating = async (id: string, rating: number): Promise<IPerfume> => {
+//   const perfume = await PerfumeModel.findById(id);
+//   if (!perfume) {
+//     throw new Error("Perfume not found");
+//   }
 
-  // ✅ Corrigé : on manipule l’instance, pas le modèle !
+//   // ✅ Corrigé : on manipule l’instance, pas le modèle !
+//   perfume.ratings = perfume.ratings ?? [];
+//   perfume.ratings.push(rating);
+//   await perfume.save();
+
+//   return perfume;
+// };
+
+
+export const addRating = async (id: string, rating: number) => {
+  const perfume = await PerfumeModel.findById(id);
+  if (!perfume) throw new Error("Perfume not found");
+
   perfume.ratings = perfume.ratings ?? [];
   perfume.ratings.push(rating);
   await perfume.save();
 
-  return perfume;
+  const avg = perfume.ratings.reduce((a, b) => a + b, 0) / perfume.ratings.length;
+
+  return { perfume, averageRating: avg, nbRatings: perfume.ratings.length };
 };
+
 
 // 🔹 Top 3 des parfums les mieux notés
 export const getTop3 = async (): Promise<IPerfume[]> => {
