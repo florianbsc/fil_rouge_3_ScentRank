@@ -2,13 +2,16 @@
 # Étape de développement (hot reload)
 # ===============================
 FROM node:20-alpine AS dev
+
+# Étape 2 : Créer le répertoire de l'app
 WORKDIR /usr/src/app
 
-# Copie uniquement les fichiers nécessaires pour installer les deps
-COPY package*.json ./
+# Étape 3 : Copier les fichiers de dépendances
+COPY package*.json tsconfig.json ./
 
 # Installation des dépendances avec cache layerisé
-RUN npm ci
+# RUN npm ci
+RUN npm install
 
 # Copie du reste du projet
 COPY . .

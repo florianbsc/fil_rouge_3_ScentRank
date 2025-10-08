@@ -1,6 +1,7 @@
 /mongodb_data
 init-mongo/02-seed.js
 
+
 # --- Node.js ---
 node_modules/
 npm-debug.log*
