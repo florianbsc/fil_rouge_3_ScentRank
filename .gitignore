@@ -1,0 +1,41 @@
+/mongodb_data
+init-mongo/02-seed.js
+
+
+# --- Node.js ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json # (optionnel : si vous ne voulez pas verrouiller les deps dans git)
+
+# --- Build NestJS ---
+dist/
+.out/
+.next/
+.cache/
+
+# --- Environnements ---
+.env
+.env.*.local
+.env.dev
+.env.prod
+.env.test
+
+# --- Logs ---
+logs
+*.log
+*.tmp
+.temp
+.tmp
+
+# --- IDE / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Docker ---
+.dockerignore
+docker-data/
