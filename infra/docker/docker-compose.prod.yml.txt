@@ -2,7 +2,7 @@ services:
 
   api:
     build:
-      context: ./backend-express              # On construit l’image à partir du code backend
+      context: ./backend              # On construit l’image à partir du code backend
       target: prod                    # On utilise la target "prod" du Dockerfile (build optimisé, sans dev deps)
       dockerfile: ../Dockerfile       # Dockerfile multi-stage situé à la racine
     # container_name: nest_api_prod   # (Optionnel) Nom fixe pour le conteneur en prod

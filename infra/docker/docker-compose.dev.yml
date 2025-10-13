@@ -1,15 +1,15 @@
 services:
   api:
     build:
-      context: ./backend-express              # On construit l’image à partir du dossier backend
+      context: ../../backend              # On construit l’image à partir du dossier backend
+      dockerfile: ./Dockerfile          # On utilise le Dockerfile multi-stage situé à la racine
       target: dev                     # On utilise la target "dev" du Dockerfile (hot reload NestJS)
-      dockerfile: ../Dockerfile       # On utilise le Dockerfile multi-stage situé à la racine
     # container_name: api_dev           # (Optionnel) Si tu veux un nom fixe pour le conteneur
     ports:
       - "${PORT:-3000}:3000"          # Expose le port défini dans .env.dev (ou 3000 par défaut)
     env_file: .env.dev                # Charge les variables d’environnement depuis .env.dev
     volumes:
-      - ./backend-express:/usr/src/app        # Monte ton code local → synchro automatique avec le conteneur
+      - ../../backend:/usr/src/app        # Monte ton code local → synchro automatique avec le conteneur
       - node_modules_dev:/usr/src/app/node_modules
                                       # Volume nommé pour node_modules (évite les conflits host/container)
     depends_on:

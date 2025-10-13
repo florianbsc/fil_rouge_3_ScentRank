@@ -1,16 +1,17 @@
-# ===============================
-# Étape de développement (hot reload)
-# ===============================
-FROM node:20-alpine AS dev
-
-# Étape 2 : Créer le répertoire de l'app
+# ───────────────────────────────
+# 1⃣ STAGE BASE
+# ───────────────────────────────
+FROM node:20-alpine AS base
 WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm install -g npm@latest
 
-# Étape 3 : Copier les fichiers de dépendances
-COPY package*.json tsconfig.json ./
+# ───────────────────────────────
+# 2⃣ STAGE DEV (utilisé par docker-compose)
+# ───────────────────────────────
+FROM base AS dev
 
-# Installation des dépendances avec cache layerisé
-# RUN npm ci
+# Installe uniquement les dépendances nécessaires au dev
 RUN npm install
 
 # Copie du reste du projet
@@ -20,8 +21,7 @@ COPY . .
 RUN npm install -g nodemon
 # RUN npm install -g @nestjs/cli
 
-
-# Lancement en mode dev avec hot reload
+# Active le hot reload avec NestJS
 CMD ["npm", "run", "start:dev"]
 
 
@@ -38,7 +38,7 @@ COPY package*.json ./
 RUN npm ci
 
 # Copie du code source après installation des deps
-COPY . .
+COPY .. .
 
 # Compilation du projet (sortie dans dist/)
 RUN npm run build
