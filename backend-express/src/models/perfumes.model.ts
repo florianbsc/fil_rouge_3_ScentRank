@@ -21,7 +21,6 @@ export interface IPerfume extends Document {
   updatedAt?: Date;
 }
 
-
 // Schéma Mongoose
 const PerfumeSchema: Schema<IPerfume> = new Schema(
   {
@@ -50,7 +49,12 @@ const PerfumeSchema: Schema<IPerfume> = new Schema(
     timestamps: true, // ajoute automatiquement createdAt / updatedAt
     versionKey: false, // supprime le champ __v
   }
+  
 );
+
+PerfumeSchema.index({ name: 1 });
+PerfumeSchema.index({ brand: 1 });
+
 // Virtual pour moyenne des notes
 PerfumeSchema.virtual("averageRating").get(function (this: IPerfume) {
   if (!this.ratings || this.ratings.length === 0) return 0;
