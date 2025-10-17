@@ -1,5 +1,5 @@
 # ───────────────────────────────
-# 1⃣ STAGE BASE
+# STAGE BASE
 # ───────────────────────────────
 FROM node:20-alpine AS base
 WORKDIR /usr/src/app
@@ -7,7 +7,7 @@ COPY package*.json ./
 RUN npm install -g npm@latest
 
 # ───────────────────────────────
-# 2⃣ STAGE DEV (utilisé par docker-compose)
+# STAGE DEV (utilisé par docker-compose)
 # ───────────────────────────────
 FROM base AS dev
 
