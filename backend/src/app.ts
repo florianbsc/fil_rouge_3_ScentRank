@@ -4,7 +4,7 @@ import cors from "cors";
 import morgan from "morgan";
 import perfumesRouter from "./modules/perfumes/perfumes.route";
 import usersRouter from "./modules/users/users.route";
-import votesRouter from "./modules/rates/rates.route";
+import ratesRouter from "./modules/rates/rates.route";
 
 // const app: Application = express();
 const app = express();
@@ -16,8 +16,8 @@ app.use(morgan("dev"));
 
 // Routes
 app.use("/api-V1/perfumes", perfumesRouter);
-app.use("/api-V1/auth", usersRouter);
-app.use("/api-V1/votes", votesRouter);
+app.use("/api-V1/users", usersRouter);
+app.use("/api-V1/rates", ratesRouter);
 
 
 // Route de test

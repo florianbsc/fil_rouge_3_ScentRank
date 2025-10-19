@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { config } from "./env";
 import { PerfumeModel } from "../modules/perfumes/perfumes.model";
+// import { UserModel } from "../modules/users/users.model";
 
 // Connexion MongoDB
 
@@ -9,6 +10,22 @@ export const connectDB = async () => {
         await mongoose.connect(config.MONGO_URI);
         console.log("✅ Connected to MongoDB");
 
+    //  Création de l'admin
+    // const adminEmail = "admin@scentrank.com";
+    // const adminPassword = "admin123"; 
+
+    // const existingAdmin = await UserModel.findOne({ email: adminEmail });
+    // if (!existingAdmin) {
+    //   await UserModel.create({
+    //     email: adminEmail,
+    //     password: adminPassword,
+    //     role: "admin",
+    //   });
+    //   console.log(`Admin créé : ${adminEmail} / ${adminPassword}`);
+    // } else {
+    //   console.log("Admin déjà existant");
+    // }
+
          const count = await PerfumeModel.countDocuments();
           if (count === 0) {
             console.log("🌱 Insertion de données initiales...");
@@ -16,10 +33,10 @@ export const connectDB = async () => {
               {
                 name: "Bleu de Chanel",
                 brand: "Chanel",
-                gender: "male",
                 description: "Boisé, frais et élégant.",
+                imageUrl: "https://www.avenue-des-parfums.fr/93820-large_default/bleu-de-chanel-eau-de-parfum-vaporisateur.jpg",
+                gender: "male",
                 price: mongoose.Types.Decimal128.fromString("120.50"),
-                ratings: [5, 4, 5],
                 releaseYear: 2010,
               },
               {
@@ -28,7 +45,7 @@ export const connectDB = async () => {
                 gender: "male",
                 description: "Frais et vibrant.",
                 price: mongoose.Types.Decimal128.fromString("130.00"),
-                ratings: [4, 5, 5],
+                // ratings: [4, 5, 5],
                 releaseYear: 2015,
               },
               {
@@ -37,7 +54,7 @@ export const connectDB = async () => {
                 gender: "unisex",
                 description: "Épicé et mystérieux.",
                 price: mongoose.Types.Decimal128.fromString("150.00"),
-                ratings: [5, 5, 4],
+                // ratings: [5, 5, 4],
                 releaseYear: 2006,
               },
             ]);

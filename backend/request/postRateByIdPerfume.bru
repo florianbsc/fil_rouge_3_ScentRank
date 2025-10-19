@@ -1,0 +1,28 @@
+meta {
+  name: postRateByIdPerfume
+  type: http
+  seq: 9
+}
+
+post {
+  url: http://localhost:3000/api-V1/rates/perfume/66e4f9cbab9d3a9b8c20d3e5
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+  
+    "sentiment": 5,
+    "longevity": 4,
+    "sillage": 5,
+    "valueForMoney": 4,
+    "gender": 1,
+    "season": ["summer", "day"]
+  }
+  
+}
+
+settings {
+  encodeUrl: true
+}
