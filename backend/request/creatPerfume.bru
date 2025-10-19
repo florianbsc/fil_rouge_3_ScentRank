@@ -1,0 +1,35 @@
+meta {
+  name: creatPerfume
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:3000/api-V1/perfumes
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Le Male",
+    "brand": "Jean Paul Gaultier",
+    "description": "Le Male est une fragrance iconique...",
+    "gender": "male",
+    "imageUrl": "https://cdn.jeanpaulgaultier.com/images/le-male-edt.jpg",
+    "olfactoryFamily": ["Oriental", "Fougere"],
+    "olfactoryNotes": {
+      "top": ["Lavande", "Menthe", "Cardamome", "Bergamote", "Artemisia"],
+      "heart": ["Cannelle", "Fleur d’oranger", "Carvi"],
+      "base": ["Vanille", "Fève tonka", "Bois de santal", "Ambre", "Cèdre"]
+    },
+    "ratings": [5, 4, 5, 5, 4],
+    "price": 89.99,
+    "releaseDate": "1995-01-01T00:00:00.000Z"
+  }
+  
+}
+
+settings {
+  encodeUrl: true
+}
