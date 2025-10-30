@@ -1,53 +1,71 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { useState} from "react";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import Button from "@/components/Button";
+import IconButton from "@/components/IconButton";
+import CircleButton from "@/components/CircleButton";
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title"></ThemedText>
 
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
 
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-    
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-  
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+export default function Index() {
+    const [showAppOptions, setShowAppOptions] = useState<boolean>(false);
+
+
+    const onReset = () => {
+        setShowAppOptions(false);
+    };
+
+
+    const onSaveImageAsync = async () => {
+        // we will implement this later
+    };
+
+    return (
+        <GestureHandlerRootView style={styles.container}>
+            <View style={styles.container}>
+
+                {showAppOptions ? (
+                    <View style={styles.optionsContainer}>
+                        <View style={styles.optionsRow}>
+                            <IconButton icon="refresh" label="Reset" onPress={onReset} />
+                            {/*<CircleButton  />*/}
+                            <IconButton icon="save-alt" label="Save" onPress={onSaveImageAsync} />
+                        </View>
+                    </View>
+                ) : (
+                    <View style={styles.footerContainer}>
+                        <Button label={"Choisir un parfum"} theme="primary" />
+                        <Button label={"voter ce parfum"} onPress={() => setShowAppOptions(true)} />
+                    </View>
+                )}
+
+            </View>
+        </GestureHandlerRootView>
+
+    );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
+
+    container: {
+        flex: 1,
+        backgroundColor: '#25292e',
+        alignItems: 'center',
+    },
+    imageContainer: {
+        flex: 1,
+    },
+    footerContainer: {
+        flex: 1 / 3,
+        alignItems: 'center',
+    },
+    optionsContainer: {
+        position: 'absolute',
+        bottom: 80,
+    },
+    optionsRow: {
+        alignItems: 'center',
+        flexDirection: 'row',
+    }
 });
