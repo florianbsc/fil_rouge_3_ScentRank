@@ -22,12 +22,6 @@ export default function RootLayout() {
                     options={{
                         headerShown: false, }}
                 />
-                <Stack.Screen
-                    name="login"
-                    options={{
-                        title: 'connexion',
-                        headerShown: false, }}
-                />
             </Stack>
         </GestureHandlerRootView>
 

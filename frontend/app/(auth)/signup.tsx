@@ -1,10 +1,9 @@
 import {View, Text, StyleSheet} from "react-native";
 
-
-export  default function FoundScreen() {
+export  default function SignupScreen() {
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Liste de parfums</Text>
+            <Text style={styles.text}>Page d enregistrement</Text>
         </View>
     );
 }

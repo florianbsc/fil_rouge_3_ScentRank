@@ -1,71 +1,19 @@
-import { View, StyleSheet } from 'react-native';
-import { useState} from "react";
-
-import Button from "@/components/Button";
-import IconButton from "@/components/IconButton";
-import CircleButton from "@/components/CircleButton";
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-
-
+import React from 'react';
+import {View, Text, SafeAreaView, ScrollView, ImageBackground, StyleSheet} from 'react-native';
 
 export default function Index() {
-    const [showAppOptions, setShowAppOptions] = useState<boolean>(false);
-
-
-    const onReset = () => {
-        setShowAppOptions(false);
-    };
-
-
-    const onSaveImageAsync = async () => {
-        // we will implement this later
-    };
-
     return (
-        <GestureHandlerRootView style={styles.container}>
-            <View style={styles.container}>
-
-                {showAppOptions ? (
-                    <View style={styles.optionsContainer}>
-                        <View style={styles.optionsRow}>
-                            <IconButton icon="refresh" label="Reset" onPress={onReset} />
-                            {/*<CircleButton  />*/}
-                            <IconButton icon="save-alt" label="Save" onPress={onSaveImageAsync} />
-                        </View>
-                    </View>
-                ) : (
-                    <View style={styles.footerContainer}>
-                        <Button label={"Choisir un parfum"} theme="primary" />
-                        <Button label={"voter ce parfum"} onPress={() => setShowAppOptions(true)} />
-                    </View>
-                )}
-
-            </View>
-        </GestureHandlerRootView>
-
-    );
+        <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+            <ScrollView style={{padding: 20}}>
+                <View style={{flexDirection: 'row', justifyContent:'space-between', marginBottom: 20}}>
+                    <Text>Hello utilisateur</Text>
+                    <ImageBackground
+                        source={require('../../assets/images/profile.png')}
+                        style={{width: 35, height: 35}}
+                        imageStyle={{borderRadius: 25}}
+                        />
+                </View>
+            </ScrollView>
+        </SafeAreaView>
+    )
 }
-
-const styles = StyleSheet.create({
-
-    container: {
-        flex: 1,
-        backgroundColor: '#25292e',
-        alignItems: 'center',
-    },
-    imageContainer: {
-        flex: 1,
-    },
-    footerContainer: {
-        flex: 1 / 3,
-        alignItems: 'center',
-    },
-    optionsContainer: {
-        position: 'absolute',
-        bottom: 80,
-    },
-    optionsRow: {
-        alignItems: 'center',
-        flexDirection: 'row',
-    }
-});

@@ -26,9 +26,18 @@ export default function TabsLayout() {
                 }}
             />
             < Tabs.Screen
+                name="trending"
+                options={{
+                    title: 'Tendance',
+                    tabBarIcon: ({ color, focused }) => (
+                        <Ionicons name={focused ? 'stats-chart' : 'stats-chart-outline'} color={color} size={24}/>
+                    ),
+                }}
+            />
+            < Tabs.Screen
             name="found"
             options={{
-                title: 'Recherche',
+                title: 'Parfums',
                 tabBarIcon: ({ color, focused }) => (
                     <Ionicons name={focused ? 'search' : 'search-outline'} color={color} size={24}/>
                 ),
@@ -52,8 +61,6 @@ export default function TabsLayout() {
                     ),
                 }}
             />
-
-
         </Tabs>
     );
 }
