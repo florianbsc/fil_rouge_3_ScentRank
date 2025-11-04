@@ -7,7 +7,7 @@ services:
     # container_name: api_dev           # (Optionnel) Si tu veux un nom fixe pour le conteneur
     ports:
       - "${PORT:-3000}:3000"          # Expose le port défini dans .env.dev (ou 3000 par défaut)
-    env_file: .env.dev                # Charge les variables d’environnement depuis .env.dev
+    env_file: ../env/.env.dev                # Charge les variables d’environnement depuis .env.dev
     volumes:
       - ../../backend:/usr/src/app        # Monte ton code local → synchro automatique avec le conteneur
       - node_modules_dev:/usr/src/app/node_modules
@@ -24,13 +24,14 @@ services:
     image: mongo:8.0                  # Utilise l’image officielle MongoDB version 6
     # container_name: mongo_dev         # (Optionnel) Nom fixe pour le conteneur MongoDB
     restart: unless-stopped           # Relance auto du conteneur sauf si tu l’arrêtes manuellement
-    env_file: .env.dev                # Variables d’env pour configurer Mongo (user, mdp, db…)
+    env_file: ../env/.env.dev                # Variables d’env pour configurer Mongo (user, mdp, db…)
     ports:
       - "${MONGO_PORT:-27017}:27017"  # Expose le port Mongo défini dans .env.dev (ou 27017 par défaut)
     volumes:
       - mongo_data_dev:/data/db       # Volume persistant pour les données Mongo
-        # - ./init-mongo:/docker-entrypoint-initdb.d
-                                      # (Optionnel) Dossier pour initialiser la DB avec des scripts
+#      - ../init-mongo:/docker-entrypoint-initdb.d    # Monte les données MongoDB pour persistance en dev
+      - ./infra/init-mongo/mongodb_data:/data/db
+      # (Optionnel) Dossier pour initialiser la DB avec des scripts
     healthcheck:                      # Vérifie que Mongo est bien prêt avant de lancer l’API
       test: ["CMD-SHELL", "echo 'db.runCommand({ ping: 1 })' | mongosh localhost:27017/test --quiet || exit 1"]
       interval: 5s                    # Vérifie toutes les 5 secondes

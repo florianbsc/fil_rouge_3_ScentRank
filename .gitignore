@@ -19,8 +19,8 @@ dist/
 # --- Environnements ---
 .env
 .env.*.local
-infra/docker/.env.dev
-.env.prod
+infra/env/.env.dev
+infra/env/.env.prod
 .env.test
 
 # --- Logs ---
