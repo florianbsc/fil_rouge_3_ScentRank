@@ -1,6 +1,46 @@
 import { RateModel, IRate } from "./rates.model";
 import { PerfumeModel } from "../perfumes/perfumes.model";
 
+// async function addOrUpdateRate(rateData) {
+//     // Création ou mise à jour du vote (empêche doublon grâce à l’index unique)
+//     const rate = await RateModel.findOneAndUpdate(
+//         { userId: rateData.userId, perfumeId: rateData.perfumeId },
+//         rateData,
+//         { new: true, upsert: true }
+//     );
+//
+//     // Recalcule des moyennes du parfum
+//     const averages = await RateModel.aggregate([
+//         { $match: { perfumeId: rateData.perfumeId } },
+//         {
+//             $group: {
+//                 _id: "$perfumeId",
+//                 avgSentiment: { $avg: "$sentiment" },
+//                 avgLongevity: { $avg: "$longevity" },
+//                 avgSillage: { $avg: "$sillage" },
+//                 avgValueForMoney: { $avg: "$valueForMoney" },
+//                 avgGender: { $avg: "$gender" },
+//             },
+//         },
+//     ]);
+//
+//     const stats = averages[0];
+//
+//     if (stats) {
+//         await PerfumeModel.findByIdAndUpdate(rateData.perfumeId, {
+//             $set: {
+//                 "ratings.avgSentiment": stats.avgSentiment,
+//                 "ratings.avgLongevity": stats.avgLongevity,
+//                 "ratings.avgSillage": stats.avgSillage,
+//                 "ratings.avgValueForMoney": stats.avgValueForMoney,
+//                 "ratings.avgGender": stats.avgGender,
+//             },
+//         });
+//     }
+//
+//     return rate;
+// }
+
 // Créer ou mettre à jour un rate
 export const upsertRate = async (data: IRate) => {
     const existing = await RateModel.findOne({

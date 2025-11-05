@@ -29,9 +29,7 @@ services:
       - "${MONGO_PORT:-27017}:27017"  # Expose le port Mongo défini dans .env.dev (ou 27017 par défaut)
     volumes:
       - mongo_data_dev:/data/db       # Volume persistant pour les données Mongo
-#      - ../init-mongo:/docker-entrypoint-initdb.d    # Monte les données MongoDB pour persistance en dev
-      - ./infra/init-mongo/mongodb_data:/data/db
-      # (Optionnel) Dossier pour initialiser la DB avec des scripts
+      - ../init-mongo:/docker-entrypoint-initdb.d    # Monte les données MongoDB pour persistance en dev
     healthcheck:                      # Vérifie que Mongo est bien prêt avant de lancer l’API
       test: ["CMD-SHELL", "echo 'db.runCommand({ ping: 1 })' | mongosh localhost:27017/test --quiet || exit 1"]
       interval: 5s                    # Vérifie toutes les 5 secondes

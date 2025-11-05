@@ -1,44 +1,44 @@
-// Ce script s'exécute automatiquement à l'initialisation du conteneur Mongo.
-// Il crée la base "devdb" et un utilisateur avec les bons droits.
+// ===================================================================
+// Fichier d'initialisation de la base de données MongoDB
+// ===================================================================
 
-db = db.getSiblingDB("devdb");
+// On définit la base de données de développement
+const dbName = "devdb";
 
-// Création d'un utilisateur pour le backend
-db.createUser({
-    user: "devuser",
-    pwd: "devpass",
-    roles: [
-        {
-            role: "readWrite",
-            db: "devdb",
-        },
-    ],
-});
+// On récupère ou crée la base
+db = db.getSiblingDB(dbName);
 
-// Création d'une collection "perfumes" avec un index exemple
-db.createCollection("perfumes");
-db.perfumes.createIndex({ name: 1 }, { unique: true });
+// Création des collections principales si elles n'existent pas déjà
+if (!db.getCollectionNames().includes("users")) {
+    db.createCollection("users");
+    print("✅ Collection 'users' créée");
+}
+// === RATES ===
+if (!db.getCollectionNames().includes("rates")) {
+    db.createCollection("rates");
+    print("✅ Collection 'rates' créée");
+}
 
-// Optionnel : insérer quelques données de test
-db.perfumes.insertMany([
-    {
-        name: "Dior Sauvage",
-        house: "Dior",
-        description: "Un parfum frais et puissant avec des notes boisées et aromatiques.",
-        price: 120,
-        gender: "Homme",
-        family: "Boisé Aromatique",
-        rating: 4.8,
-    },
-    {
-        name: "Chanel No.5",
-        house: "Chanel",
-        description: "Un classique floral avec des notes d’ylang-ylang, jasmin et rose.",
-        price: 150,
-        gender: "Femme",
-        family: "Floral Aldéhydé",
-        rating: 4.9,
-    },
-]);
+if (!db.getCollectionNames().includes("perfumes")) {
+    db.createCollection("perfumes");
+    print("✅ Collection 'perfumes' créée");
+}
 
-print("✅ Base devdb initialisée avec succès !");
+// if (!db.getCollectionNames().includes("famillesolfactives")) {
+//     db.createCollection("famillesolfactives");
+//     print("✅ Collection 'famillesolfactives' créée");
+// }
+
+// if (!db.getCollectionNames().includes("maisonsparfum")) {
+//     db.createCollection("maisonsparfum");
+//     print("✅ Collection 'maisonsparfum' créée");
+// }
+
+// Ajout d'index utiles (par exemple pour les recherches et contraintes d’unicité)
+db.users.createIndex({ email: 1 }, { unique: true });
+db.perfumes.createIndex({ name: 1 });
+db.rates.createIndex({ userId: 1, perfumeId: 1 }, { unique: true });
+// db.famillesolfactives.createIndex({ nom: 1 });
+// db.maisonsparfum.createIndex({ nom: 1 });
+
+print("📦 Base '" + dbName + "' initialisée avec succès !");
