@@ -8,7 +8,7 @@ services:
     # container_name: nest_api_prod   # (Optionnel) Nom fixe pour le conteneur en prod
     ports:
       - "${PORT}:3000"                # Expose le port défini dans .env.prod sur le port 3000 du conteneur
-    env_file: .env.prod               # Charge les variables d’environnement de prod
+    env_file: ../env/.env.prod               # Charge les variables d’environnement de prod
     depends_on:
       mongo:
         condition: service_healthy    # L’API démarre seulement quand MongoDB est prêt

@@ -85,7 +85,7 @@ export interface IPerfume extends Document
     };
     ratings?: number[];
     price?: mongoose.Types.Decimal128;
-    releaseDate?: Date;
+    releaseYear?: number;
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -107,9 +107,16 @@ const perfumeSchema = new Schema<IPerfume>(
         heart: [{type: String}],
         base: [{type: String}],
     },
-    ratings: { type: [Number], default: [] },
+    // Sous-document pour stocker les moyennes des votes
+    ratings: {
+        avgSentiment: { type: Number, default: null },
+        avgLongevity: { type: Number, default: null },
+        avgSillage: { type: Number, default: null },
+        avgValueForMoney: { type: Number, default: null },
+        avgGender: { type: Number, default: null },
+    },
     price: { type: mongoose.Schema.Types.Decimal128 },
-    releaseDate: {type: Date},
+    releaseYear: { type: Number },
 },
 {
     timestamps: true, // ajoute automatiquement createdAt / updatedAt
