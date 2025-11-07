@@ -6,7 +6,7 @@
   },
   "scripts": {
     "dev:up": "docker compose -f infra/docker/docker-compose.dev.yml --profile dev up --build",
-    "dev:down": "docker compose -f infra/docker/docker-compose.dev.yml --profile dev down -v"
+    "dev:down": "docker compose -f infra/docker/docker-compose.dev.yml --profile dev down"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
