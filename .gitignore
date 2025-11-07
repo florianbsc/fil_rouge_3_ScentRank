@@ -1,5 +1,5 @@
-/mongodb_data
-init-mongo/02-seed.js
+/infra/init-mongo/mongodb_data
+infra/init-mongo/02-seed-db.js
 
 
 # --- Node.js ---
@@ -19,8 +19,8 @@ dist/
 # --- Environnements ---
 .env
 .env.*.local
-.env.dev
-.env.prod
+infra/env/.env.dev
+infra/env/.env.prod
 .env.test
 
 # --- Logs ---
@@ -37,5 +37,5 @@ logs
 Thumbs.db
 
 # --- Docker ---
-.dockerignore
+infra/docker/.dockerignore
 docker-data/
