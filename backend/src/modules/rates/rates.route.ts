@@ -6,5 +6,7 @@ const router = Router();
 router.post("/perfume/:perfumeId", RateController.upsert);                // Créer / modifier un vote
 router.get("/perfume/:perfumeId", RateController.getStats); // Statistiques pour un parfum
 router.get("/top", RateController.getTop);              // Top 5 global
+router.get("/perfume/:perfumeId/user/:userId", RateController.checkIfUserRated);
+
 
 export default router;

@@ -107,3 +107,9 @@ export const getTopPerfumes = async () => {
 
     return results.sort((a, b) => b.globalScore - a.globalScore).slice(0, 5);
 };
+
+// empeche un user de voter 2x
+export const findUserRate = async (perfumeId: string, userId: string) => {
+    return RateModel.findOne({ perfumeId, userId }).lean();
+};
+
