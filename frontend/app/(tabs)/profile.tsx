@@ -1,9 +1,19 @@
-import {View, Text, StyleSheet} from "react-native";
+import {View, Text, StyleSheet, Button} from "react-native";
 
-export  default function ProfileScreen() {
+import { useAuth } from "../../contexts/AuthContext";
+import { router } from "expo-router";
+
+export default function ProfileScreen() {
+    const { logout } = useAuth();
+
+    const handleLogout = async () => {
+        await logout();
+        router.replace("/(auth)/login");
+    };
+
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>Page d'info perso du user</Text>
+        <View>
+            <Button title="Se déconnecter" onPress={handleLogout} />
         </View>
     );
 }
