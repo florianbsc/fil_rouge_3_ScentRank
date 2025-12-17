@@ -1,17 +1,31 @@
-import { Request, Response } from "express";
+import { Response } from "express";
+import { AuthRequest } from "../../middlewares/auth.middleware";
 import * as RateService from "./rates.service";
+import { UserModel } from "../users/users.model";
 
-export const upsert = async (req: Request, res: Response) => {
+export const upsert = async (req: AuthRequest, res: Response) => {
     try {
-        const { sentiment, userId } = req.body;
+        const { sentiment } = req.body;
+        const userId = req.user?.id;
+        const perfumeId = req.params.perfumeId;
+
+        if (!userId) {
+            return res.status(401).json({ message: "Unauthenticated" });
+        }
 
         if (!sentiment || sentiment < 1 || sentiment > 5) {
             return res.status(400).json({ message: "Invalid sentiment" });
         }
 
+        // Vérifier que l'utilisateur existe
+        const userExists = await UserModel.exists({ _id: userId });
+        if (!userExists) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
         const rate = await RateService.upsertRate({
             userId,
-            perfumeId: req.params.perfumeId,
+            perfumeId,
             sentiment,
         });
 
@@ -22,13 +36,15 @@ export const upsert = async (req: Request, res: Response) => {
     }
 };
 
-export const getStats = async (req: Request, res: Response) => {
+export const getStats = async (req: AuthRequest, res: Response) => {
     const stats = await RateService.getPerfumeStats(req.params.perfumeId);
-    if (!stats) return res.status(404).json({ message: "No rates yet" });
+    if (!stats) {
+        return res.status(404).json({ message: "No rates yet" });
+    }
     res.json(stats);
 };
 
-export const getTop = async (_req: Request, res: Response) => {
+export const getTop = async (_req: AuthRequest, res: Response) => {
     try {
         const top = await RateService.getTopPerfumes();
         res.status(200).json(top);
@@ -38,7 +54,7 @@ export const getTop = async (_req: Request, res: Response) => {
     }
 };
 
-export const checkIfUserRated = async (req: Request, res: Response) => {
+export const checkIfUserRated = async (req: AuthRequest, res: Response) => {
     const { perfumeId, userId } = req.params;
 
     try {

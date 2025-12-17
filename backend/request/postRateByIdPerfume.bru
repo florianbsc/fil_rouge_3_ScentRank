@@ -7,18 +7,17 @@ meta {
 post {
   url: http://localhost:3000/api-V1/rates/perfume/68f74a7aec3f6a294798c164
   body: json
-  auth: inherit
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5M2RhZWExN2IxNmE0MDQ5NGIxZGRmYSIsInJvbGUiOiJ1c2VyIiwiZW1haWwiOiJqZWFuLmR1cG9udEBleGFtcGxlLmNvbSIsImlhdCI6MTc2NTk2MzM2MywiZXhwIjoxNzY2NTY4MTYzfQ.ImWuKjo411PBJMXRaqLw-nRbJlVxzv4w-BWm5qvLt8Q
 }
 
 body:json {
   {
-  
-    "sentiment": 5,
-    "longevity": 4,
-    "sillage": 5,
-    "valueForMoney": 4,
-    "gender": 1,
-    "season": ["summer", "day"]
+    "userId": "693daea17b16a40494b1ddfa",
+    "sentiment": 2
   }
   
 }
