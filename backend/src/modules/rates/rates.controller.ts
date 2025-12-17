@@ -73,3 +73,27 @@ export const checkIfUserRated = async (req: AuthRequest, res: Response) => {
         res.status(500).json({ message: "Error checking rate" });
     }
 };
+
+export const checkIfCurrentUserRated = async (
+    req: AuthRequest,
+    res: Response
+) => {
+    const userId = req.user?.id;
+    const { perfumeId } = req.params;
+
+    if (!userId) {
+        return res.status(401).json({ alreadyRated: false });
+    }
+
+    const rate = await RateService.findUserRate(perfumeId, userId);
+
+    if (!rate) {
+        return res.json({ alreadyRated: false });
+    }
+
+    return res.json({
+        alreadyRated: true,
+        sentiment: rate.sentiment,
+    });
+};
+

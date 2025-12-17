@@ -22,5 +22,10 @@ router.get(
     "/perfume/:perfumeId/user/:userId",
     RateController.checkIfUserRated
 );
+router.get(
+    "/perfume/:perfumeId/user/me",
+    authMiddleware,
+    RateController.checkIfCurrentUserRated
+);
 
 export default router;

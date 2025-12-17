@@ -1,51 +1,79 @@
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
-
-const USER_ID = "690e2c00aed1e7f9eb4f8804"; // provisoire
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function RateForm() {
     const { id } = useLocalSearchParams();
+    const router = useRouter();
+
     const [rating, setRating] = useState(0);
     const [alreadyRated, setAlreadyRated] = useState(false);
     const [loading, setLoading] = useState(true);
 
-    // Vérifier si l'utilisateur a déjà voté
+    // Vérifier l'auth
     useEffect(() => {
-        fetch(`http://localhost:3000/api-V1/rates/perfume/${id}/user/${USER_ID}`)
-            .then(res => res.json())
-            .then(data => {
+        const checkAuth = async () => {
+            const token = await AsyncStorage.getItem("token");
+            if (!token) {
+                router.replace("/login");
+                return;
+            }
+
+            // récupérer le vote si connecté
+            try {
+                const res = await fetch(
+                    `http://localhost:3000/api-V1/rates/perfume/${id}/user/me`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+                const data = await res.json();
                 if (data?.alreadyRated) {
                     setAlreadyRated(true);
-                    setRating(data.note); // affiche la note déjà donnée
+                    setRating(data.sentiment);
                 }
+            } catch (error) {
+                console.log("Erreur récupération vote", error);
+            } finally {
                 setLoading(false);
-            })
-            .catch(() => {
-                console.log("Erreur récupération vote");
-                setLoading(false);
-            });
-    }, []);
+            }
+        };
 
-    const submitRate = () => {
-        if (alreadyRated) {
-            Alert.alert("Déjà voté", "Vous avez déjà évalué ce parfum.");
+        checkAuth();
+    }, [id]);
+
+    const submitRate = async () => {
+        const token = await AsyncStorage.getItem("token");
+        if (!token) {
+            router.replace("/login");
             return;
         }
 
-        fetch(`http://localhost:3000/api-V1/rates/perfume/${id}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                note: rating,
-                userId: USER_ID,    // obligatoire pour le backend
-            }),
-        })
-            .then(() => {
-                Alert.alert("Merci !", "Votre vote a été enregistré.");
-                setAlreadyRated(true);
-            })
-            .catch(() => Alert.alert("Erreur", "Impossible d’envoyer votre vote."));
+        if (rating === 0) {
+            Alert.alert("Note requise", "Veuillez choisir une note.");
+            return;
+        }
+
+        try {
+            await fetch(`http://localhost:3000/api-V1/rates/perfume/${id}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    sentiment: rating,
+                }),
+            });
+
+            Alert.alert("Merci !", "Votre vote a été enregistré.");
+            setAlreadyRated(true);
+        } catch {
+            Alert.alert("Erreur", "Impossible d’envoyer votre vote.");
+        }
     };
 
     if (loading) {
@@ -58,24 +86,19 @@ export default function RateForm() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Noter le parfum #{id}</Text>
+            <Text style={styles.title}>Noter ce parfum</Text>
 
             {alreadyRated && (
-                <Text style={styles.info}>⭐ Vous avez déjà donné une note : {rating}/5</Text>
+                <Text style={styles.info}>⭐ Votre note actuelle : {rating}/5</Text>
             )}
 
             <View style={styles.stars}>
                 {[1, 2, 3, 4, 5].map((s) => (
-                    <TouchableOpacity
-                        key={s}
-                        onPress={() => !alreadyRated && setRating(s)}
-                        disabled={alreadyRated}
-                    >
+                    <TouchableOpacity key={s} onPress={() => setRating(s)}>
                         <Text
                             style={[
                                 styles.star,
-                                rating >= s ? styles.activeStar : null,
-                                alreadyRated ? styles.disabledStar : null,
+                                rating >= s && styles.activeStar,
                             ]}
                         >
                             ★
@@ -84,13 +107,9 @@ export default function RateForm() {
                 ))}
             </View>
 
-            <TouchableOpacity
-                style={[styles.btn, alreadyRated && styles.btnDisabled]}
-                onPress={submitRate}
-                disabled={alreadyRated}
-            >
+            <TouchableOpacity style={styles.btn} onPress={submitRate}>
                 <Text style={styles.btnText}>
-                    {alreadyRated ? "Déjà voté" : "Envoyer"}
+                    {alreadyRated ? "Modifier mon vote" : "Envoyer"}
                 </Text>
             </TouchableOpacity>
         </View>
