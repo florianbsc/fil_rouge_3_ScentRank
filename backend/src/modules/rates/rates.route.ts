@@ -1,12 +1,26 @@
 import { Router } from "express";
 import * as RateController from "./rates.controller";
+import { authMiddleware } from "../../middlewares/auth.middleware";
 
 const router = Router();
 
-router.post("/perfume/:perfumeId", RateController.upsert);                // Créer / modifier un vote
-router.get("/perfume/:perfumeId", RateController.getStats); // Statistiques pour un parfum
-router.get("/top", RateController.getTop);              // Top 5 global
-router.get("/perfume/:perfumeId/user/:userId", RateController.checkIfUserRated);
+// Vote (utilisateur connecté)
+router.post(
+    "/perfume/:perfumeId",
+    authMiddleware,
+    RateController.upsert
+);
 
+// Stats publiques
+router.get("/perfume/:perfumeId", RateController.getStats);
+
+// Top parfums
+router.get("/top", RateController.getTop);
+
+// Vérifier si un user a voté
+router.get(
+    "/perfume/:perfumeId/user/:userId",
+    RateController.checkIfUserRated
+);
 
 export default router;
